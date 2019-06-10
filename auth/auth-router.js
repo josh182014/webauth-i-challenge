@@ -10,12 +10,14 @@ router.get('/', (req, res) => {
     res.status(200).json("In auth-router!")
 })
 
-router.get('/login', (req, res) => {
-    res.status(200).json("Login")
-})
-
-router.get('/register', (req, res) => {
-    res.status(200).json("Register")
+router.post('/register', (req, res) => {
+    Users.add(req.body)
+    .then(user => {
+        res.status(200).json(user)
+    })
+    .catch(error => {
+        res.status(500).json("server error")
+    })
 })
 
 module.exports = router
