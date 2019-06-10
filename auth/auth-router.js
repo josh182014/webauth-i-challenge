@@ -11,7 +11,11 @@ router.get('/', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    Users.add(req.body)
+    let user = req.body;
+    const hash = bcrypt.hashSync(user.password, 8);
+    user.password = hash;
+
+    Users.add(user)
     .then(user => {
         res.status(200).json(user)
     })
@@ -26,7 +30,7 @@ router.post('/login', (req, res) => {
     Users.findByUsername({ username })
       .first()
       .then(user => {
-        if (user) {
+        if (user && bcrypt.compareSync(password, user.password)) {
           res.status(200).json({ message: `Welcome ${user.username}!` });
         } else {
           res.status(401).json({ message: 'Incorrect Username or Password :/' });
