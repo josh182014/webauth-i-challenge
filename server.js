@@ -14,7 +14,7 @@ server.get('/', (req, res) => {
   res.send("It's working! It's working! anakin.gif");
 });
 
-server.use('/api/auth', authRouter)
+server.use('/api/', authRouter)
 server.use('/api/users', usersRouter)
 
 module.exports = server;
