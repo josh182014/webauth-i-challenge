@@ -2,7 +2,6 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 
 const Users = require('../users/users-model')
-const restricted = require('../auth/restricted')
 
 const router = express.Router()
 
