@@ -5,6 +5,7 @@ const cors = require('cors');
 const server = express();
 const authRouter = require('./auth/auth-router')
 const usersRouter = require('./users/users-router')
+const restricted = require('./auth/restricted')
 
 server.use(helmet());
 server.use(express.json());
@@ -15,6 +16,7 @@ server.get('/', (req, res) => {
 });
 
 server.use('/api/', authRouter)
-server.use('/api/users', usersRouter)
+server.use('/api/restricted', restricted)
+server.use('/api/restricted/users', usersRouter)
 
 module.exports = server;
