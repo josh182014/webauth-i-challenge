@@ -20,4 +20,21 @@ router.post('/register', (req, res) => {
     })
 })
 
+router.post('/login', (req, res) => {
+    let { username, password } = req.body;
+  
+    Users.findByUsername({ username })
+      .first()
+      .then(user => {
+        if (user) {
+          res.status(200).json({ message: `Welcome ${user.username}!` });
+        } else {
+          res.status(401).json({ message: 'Incorrect Username or Password :/' });
+        }
+      })
+      .catch(error => {
+        res.status(500).json("Server Error");
+      });
+  });
+
 module.exports = router
