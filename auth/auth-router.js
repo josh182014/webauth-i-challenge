@@ -40,6 +40,11 @@ router.post('/login', (req, res) => {
       .catch(error => {
         res.status(500).json("Server Error");
       });
-  });
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.send('Logged out')
+})
 
 module.exports = router
