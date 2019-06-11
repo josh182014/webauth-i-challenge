@@ -16,7 +16,8 @@ router.post('/register', (req, res) => {
 
     Users.add(user)
     .then(user => {
-        res.status(200).json(user)
+      req.session.username = user.username
+      res.status(200).json(user)
     })
     .catch(error => {
         res.status(500).json("server error")
@@ -29,6 +30,7 @@ router.post('/login', (req, res) => {
     Users.findByUsername({ username })
       .first()
       .then(user => {
+        req.session.username = user.username
         if (user && bcrypt.compareSync(password, user.password)) {
           res.status(200).json({ message: `Welcome ${user.username}!` });
         } else {
